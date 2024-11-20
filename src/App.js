@@ -2,14 +2,15 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  // data collected
   let [formData, SetformData] = useState({
     uname: "",
     uemail: "",
     upassword: "",
-    umesssage: "",
+    umessage: "",
     index: "",
   });
-
+  // changing___value
   let getvalue = (event) => {
     let oldData = { ...formData };
     let inputname = event.target.name;
@@ -17,10 +18,10 @@ function App() {
     oldData[inputname] = inputvalue;
     SetformData(oldData);
   };
+
+// updating____Data
   let [userData, setuserData] = useState([]);
   let userhandle = (event) => {
-    event.preventDefault();
-
     let userpreventData = {
       uname: formData.uname,
       uemail: formData.uemail,
@@ -29,7 +30,27 @@ function App() {
     };
     let olduserData = [...userData, userpreventData];
     setuserData(olduserData);
+    // double___input_________value____Stopping
+    let invalidData=userData.filter((v)=>v.upassword==formData.upassword || v.uemail==formData.uemail)
+    if(invalidData.length==1){
+      alert('email or  password is already exist')
+    }
+    else{
+  SetformData({
+      uname: "",
+      uemail: "",
+      upassword: "",
+      umessage: "",
+      index: "",
+    })}
+        event.preventDefault(); 
   };
+  //deleting____data
+  let deletedata=(indexnumber)=>{
+    let deleteuserdata= userData.filter((v,i)=>i!==indexnumber)
+    setuserData(deleteuserdata)
+    
+  }
   return (
     <div className="container">
       <form onSubmit={userhandle}>
@@ -80,12 +101,15 @@ function App() {
             userData.map((v, i) => {
               return (
                 <tr key={i}>
+   
                   <td>{i}</td>
                   <td>{v.uname}</td>
                   <td>{v.uemail}</td>
                   <td>{v.upassword}</td>
                   <td>{v.umessage}</td>
+                  <button className="delete" onClick={()=>deletedata(i)}>delete</button>
                 </tr>
+                
               );
             })
           ) : (

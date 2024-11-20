@@ -67,3 +67,9 @@ table thead th {
 .tables tbody tr td {
   background: #cccc;
 }
+.delete {
+border: 1px solid black;
+color: #ffff;
+background-color: #61dafb;
+border-radius: 5px;
+}
