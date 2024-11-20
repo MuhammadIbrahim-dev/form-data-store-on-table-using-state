@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container form {
+  display: flex;
+flex-direction: column;
+margin-top: 30%;
+
+}
+.container form input {
+  padding: 5px 10px 5px 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+button{
+  margin-top: 10px;
+}
+/* table___ */
+.tables {
+  border: 1px solid #000;
+  width: 50%;
+  text-align: center;
+
+}
+table thead th {
+}
+.tables tbody tr td {
+  background: #cccc;
+}
