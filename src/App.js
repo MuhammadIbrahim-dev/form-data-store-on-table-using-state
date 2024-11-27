@@ -50,11 +50,14 @@ if(formData.index===""){
 }else{
 let oldindex = formData.index;
 let oldData=userData;
- oldData[oldindex]['uname']=formData.uname
+let invalidData=userData.filter((v,i)=>(v.upassword===formData.upassword || v.uemail===formData.uemail) && i!==oldindex)
+if(invalidData.length===0){
+  oldData[oldindex]['uname']=formData.uname
  oldData[oldindex]['uemail']=formData.uemail
  oldData[oldindex]['upassword']=formData.upassword
  oldData[oldindex]['umessage']=formData.umessage
 setuserData(oldData)
+alert("your change email or password")
 SetformData({
   uname: "",
   uemail: "",
@@ -62,6 +65,17 @@ SetformData({
   umessage: "",
   index: ""
 })
+}else{
+  alert("this email is already exsist")
+  SetformData({
+    uname: "",
+    uemail: "",
+    upassword: "",
+    umessage: "",
+    index: ""
+  })
+}
+
 }
     
         event.preventDefault(); 
@@ -75,7 +89,7 @@ SetformData({
   // edit___row____data
 
   let editRow=(indexnumber)=>{
-    alert(indexnumber)
+    alert("email or password will change you !")
     let editData=userData.filter((v,i)=>i==indexnumber)[0]
     editData[`index`]=indexnumber;
     SetformData(editData)
@@ -128,7 +142,7 @@ SetformData({
         </thead>
         <tbody>
           {userData.length>=1 ? (
-            userData.map((v, i) => {
+            userData.map((v,i) => {
               return (
                 <tr key={i}>
                   <td>{i+1}</td>
