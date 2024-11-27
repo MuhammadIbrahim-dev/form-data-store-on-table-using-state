@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import { toBeEmpty } from "@testing-library/jest-dom/dist/matchers";
 
 function App() {
   // data collected
@@ -21,18 +22,20 @@ function App() {
 
 // updating____Data
   let [userData, setuserData] = useState([]);
-  let userhandle = (event) => {
+    let userhandle = (event) => {
     let userpreventData = {
       uname: formData.uname,
       uemail: formData.uemail,
       upassword: formData.upassword,
       umessage: formData.umessage,
     };
-    let olduserData = [...userData, userpreventData];
+    // see___on___inputs__use___if__else
+if(formData.index===""){
+  let olduserData = [...userData, userpreventData];
     setuserData(olduserData);
-    // double___input_________value____Stopping
-    let invalidData=userData.filter((v)=>v.upassword==formData.upassword || v.uemail==formData.uemail)
-    if(invalidData.length==1){
+    // double___input_________value____innsert data
+    let invalidData=userData.filter((v)=>v.upassword===formData.upassword || v.uemail===formData.uemail)
+    if(invalidData.length===1){
       alert('email or  password is already exist')
     }
     else{
@@ -41,21 +44,46 @@ function App() {
       uemail: "",
       upassword: "",
       umessage: "",
-      index: "",
+      index: ""
     })}
+    // updating____logic
+}else{
+let oldindex = formData.index;
+let oldData=userData;
+ oldData[oldindex]['uname']=formData.uname
+ oldData[oldindex]['uemail']=formData.uemail
+ oldData[oldindex]['upassword']=formData.upassword
+ oldData[oldindex]['umessage']=formData.umessage
+setuserData(oldData)
+SetformData({
+  uname: "",
+  uemail: "",
+  upassword: "",
+  umessage: "",
+  index: ""
+})
+}
+    
         event.preventDefault(); 
   };
   //deleting____data
-  let deletedata=(indexnumber)=>{
+  let Deletedata=(indexnumber)=>{
     let deleteuserdata= userData.filter((v,i)=>i!==indexnumber)
     setuserData(deleteuserdata)
-    
+
+  }
+  // edit___row____data
+
+  let editRow=(indexnumber)=>{
+    alert(indexnumber)
+    let editData=userData.filter((v,i)=>i==indexnumber)[0]
+    editData[`index`]=indexnumber;
+    SetformData(editData)
   }
   return (
     <div className="container">
       <form onSubmit={userhandle}>
-        {userData.length}
-        <input
+       <input
           type="name"
           onChange={getvalue}
           value={formData.uname}
@@ -83,9 +111,11 @@ function App() {
           name="umessage"
           placeholder="message"
         />
-        <button>{formData.index !== "" ? "updae" : "save"}</button>
-      </form>
+        <button>{formData.index !== "" ? "update" : "save"}</button>
 
+       
+      </form>
+      
       <table class="tables">
         <thead>
           <tr>
@@ -97,18 +127,18 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {userData.length >= 1 ? (
+          {userData.length>=1 ? (
             userData.map((v, i) => {
               return (
                 <tr key={i}>
-   
-                  <td>{i}</td>
+                  <td>{i+1}</td>
                   <td>{v.uname}</td>
                   <td>{v.uemail}</td>
                   <td>{v.upassword}</td>
                   <td>{v.umessage}</td>
-                  <button className="delete" onClick={()=>deletedata(i)}>delete</button>
-                </tr>
+                  <button className="delete" onClick={()=> Deletedata(i)}>delete</button>
+                  <button onClick={()=>editRow (i)}>edit</button>
+                  </tr>
                 
               );
             })
@@ -123,4 +153,5 @@ function App() {
   );
 }
 
+ 
 export default App;
