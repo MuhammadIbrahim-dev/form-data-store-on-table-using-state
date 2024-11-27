@@ -29,7 +29,7 @@ function App() {
       upassword: formData.upassword,
       umessage: formData.umessage,
     };
-    // see___on___inputs__use___if__else
+    // change__value__use___if__else
 if(formData.index===""){
   let olduserData = [...userData, userpreventData];
     setuserData(olduserData);
